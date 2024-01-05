@@ -29,16 +29,12 @@ class SLRun:
     def start(self):
         torch.manual_seed(self.seed)
         losses_per_step_size = []
-        plasticity_per_step_size = []
-
         if self.task.criterion == 'cross_entropy':
             accuracy_per_step_size = []
         self.learner.setup_task(self.task)
         criterion = criterions[self.task.criterion]()
         l = []
         a = []
-        plasticity_per_step = []
-        normalized_grads = []
         for i in range(self.n_samples):
             input, target = next(self.task)
             input, target = input.to(self.device), target.to(self.device)
@@ -55,26 +51,12 @@ class SLRun:
             a.append((output.argmax(dim=1) == target).float().mean().item())
             if self.task.criterion == 'cross_entropy':
                 accuracy_per_step_size.append((output.argmax(dim=1) == target).float().mean().item())
-            # compute some statistics after each task change
-            with torch.no_grad():
-                output_new = self.learner.predict(input)
-                loss_after = criterion(output_new, target)
-                loss_before = torch.clamp(loss, min=1e-8)
-                plasticity_per_step.append(torch.clamp((1-loss_after/loss_before), min=0.0, max=1.0).item())
-            grads = []
-            for p in self.learner.network.parameters():
-                grads.append(p.grad)
-            grad_vector = torch.cat([grad.view(-1) for grad in grads])
-            dot_product = 0.0001 * torch.dot(grad_vector, grad_vector) / (loss.item() + 1e-8)
             if i % self.task.change_freq == 0 and len(a) > 0:
                 avg_l = sum(l)/len(l)
                 avg_a = sum(a)/len(a)
-                avg_plasticity = sum(plasticity_per_step)/len(plasticity_per_step)
-                print(f"Task {i/self.task.change_freq}: loss {avg_l}, accuracy {avg_a}, plasticity {avg_plasticity}, normalized_grads {dot_product}")
+                print(f"Task {i/self.task.change_freq}: loss {avg_l}, accuracy {avg_a}")
                 l = []
                 a = []
-                normalized_grads = []
-                plasticity_per_step = []
 
         logging_data = {
                 'losses': losses_per_step_size,
