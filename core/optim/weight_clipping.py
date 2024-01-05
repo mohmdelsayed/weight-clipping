@@ -6,7 +6,7 @@ def init_factor(p):
     return math.sqrt(1 / (p.shape[0]+p.shape[1]))
 
 class WeightClipping(torch.optim.Optimizer):
-    def __init__(self, params, beta=2.0, init_factor=init_factor, optimizer=torch.optim.Adam, clip_last_layer=True, **kwargs):
+    def __init__(self, params, beta=1.0, init_factor=init_factor, optimizer=torch.optim.Adam, clip_last_layer=True, **kwargs):
         defaults = dict(beta=beta, init_factor=init_factor, clip_last_layer=clip_last_layer)
         super(WeightClipping, self).__init__(params, defaults)
         self.optimizer = optimizer(self.param_groups, **kwargs)
