@@ -9,7 +9,7 @@ from core.network.fcn_tanh import FCNTanh, FCNTanhSmallWithNoBias, FCNTanhSmall,
 from core.network.cnn_relu import CNNReLU
 
 from core.learner.sl.sgd import SGDLearner
-from core.learner.sl.clipped_sgd import ClippedSGDLearner
+from core.learner.sl.weight_clipping import WeightClippingLearner
 from core.learner.sl.adam import AdamLearner
 from core.learner.sl.l2_init import L2InitLearner
 import torch
@@ -42,7 +42,7 @@ networks = {
 
 learners = {
     "sgd": SGDLearner,
-    "clipped_sgd": ClippedSGDLearner,
+    "weight_clipping": WeightClippingLearner,
     "adam": AdamLearner,
     "l2_init": L2InitLearner,
 
