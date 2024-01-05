@@ -1,0 +1,8 @@
+*.pyc
+build/
+.*/
+dataset/
+generated_cmds/
+Weight_Clipping.egg-info/
+*.txt
+logs/
