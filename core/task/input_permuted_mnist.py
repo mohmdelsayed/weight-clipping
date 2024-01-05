@@ -11,7 +11,7 @@ class InputPermutedMNIST(Task):
     The inputs are permuted every 5000 steps.
     """
 
-    def __init__(self, name="input_permuted_mnist", batch_size=1, change_freq=50000):
+    def __init__(self, name="input_permuted_mnist", batch_size=1, change_freq=5000):
         self.permute_transform = []
         self.dataset = self.get_dataset(True)
         self.change_freq = change_freq
