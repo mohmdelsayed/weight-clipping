@@ -10,6 +10,7 @@ from core.network.cnn_relu import CNNReLU
 
 from core.learner.sl.sgd import SGDLearner
 from core.learner.sl.weight_clipping import WeightClippingLearner
+from core.learner.sl.shrink_and_pertub import ShrinkAndPerturbLearner
 from core.learner.sl.adam import AdamLearner
 from core.learner.sl.l2_init import L2InitLearner
 import torch
@@ -45,6 +46,7 @@ learners = {
     "weight_clipping": WeightClippingLearner,
     "adam": AdamLearner,
     "l2_init": L2InitLearner,
+    "shrink_and_perturb": ShrinkAndPerturbLearner,
 
 }
 
