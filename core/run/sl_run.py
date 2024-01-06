@@ -38,11 +38,11 @@ class SLRun:
         for i in range(self.n_samples):
             input, target = next(self.task)
             input, target = input.to(self.device), target.to(self.device)
+            output = self.learner.predict(input)
             def closure():
-                output = self.learner.predict(input)
                 loss = criterion(output, target)
-                return loss, output
-            loss, output = self.learner.update_params(closure=closure)
+                return loss
+            loss = self.learner.update_params(closure=closure)
             # check if loss is nan
             if torch.isnan(loss):
                 raise ValueError("Loss is nan")
