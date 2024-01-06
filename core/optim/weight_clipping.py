@@ -15,11 +15,11 @@ class WeightClipping(torch.optim.Optimizer):
 
     def step(self, closure=None):
         self.zero_grad()
-        loss, output = closure()
+        loss = closure()
         loss.backward()
         self.optimizer.step()
         self.weight_clipping()
-        return loss, output
+        return loss
 
     def weight_clipping(self):
         for group in self.param_groups:
