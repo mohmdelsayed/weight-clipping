@@ -17,36 +17,3 @@ class FCNReLU(nn.Sequential):
 
     def __str__(self):
         return self.name
-    
-class FCNReLUWithHooks(nn.Sequential):
-    def __init__(self, n_obs=10, n_outputs=10, n_hidden_units=300):
-        super().__init__()
-        self.name = "fcn_relu_hooks"
-        self.add_module("linear_1", nn.Linear(in_features=n_obs, out_features=n_hidden_units, bias=False))
-        self.add_module("act_1", nn.ReLU())
-        self.add_module("linear_2", nn.Linear(in_features=n_hidden_units, out_features=n_hidden_units // 2, bias=False))
-        self.add_module("act_2", nn.ReLU())
-        self.add_module("linear_3", nn.Linear(in_features=n_hidden_units // 2, out_features=n_outputs, bias=False))
-        self.activations = collections.defaultdict(list)
-        self.pre_activations = collections.defaultdict(list)
-        self.next_grad = collections.defaultdict(list)
-
-        for name, layer in self.named_modules():
-            if isinstance(layer, nn.Linear):
-                layer.register_forward_hook(partial(self.prev_activation_hook, name))
-                layer.reset_parameters()
-            if isinstance(layer, nn.ReLU):
-                layer.register_full_backward_hook(partial(self.next_grad_hook, name))
-                layer.register_forward_hook(partial(self.activation_derivative_hook, name))
-
-    def __str__(self):
-        return self.name
-
-    def prev_activation_hook(self, name, module, inp, out):
-        self.pre_activations[name] = out[0].detach()
-
-    def activation_derivative_hook(self, name, module, inp, out):
-        self.activations[name] = (out > 0.0) * 1.0
-
-    def next_grad_hook(self, name, module, g_inp, g_out):
-        self.next_grad[name] = g_inp[0]

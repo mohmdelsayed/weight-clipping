@@ -3,7 +3,7 @@ from core.task.label_permuted_emnist import LabelPermutedEMNIST
 from core.task.input_permuted_mnist import InputPermutedMNIST
 from core.task.label_permuted_mnist import LabelPermutedMNIST
 
-from core.network.fcn_relu import FCNReLU, FCNReLUWithHooks
+from core.network.fcn_relu import FCNReLU
 
 from core.learner.sl.sgd import SGDLearner
 from core.learner.sl.weight_clipping import WeightClippingLearner
@@ -23,7 +23,6 @@ tasks = {
 
 networks = {
     "fcn_relu": FCNReLU,
-    "fcn_relu_hooks": FCNReLUWithHooks,
 
 }
 
