@@ -3,10 +3,7 @@ from core.task.label_permuted_emnist import LabelPermutedEMNIST
 from core.task.input_permuted_mnist import InputPermutedMNIST
 from core.task.label_permuted_mnist import LabelPermutedMNIST
 
-from core.network.fcn_leakyrelu import FCNLeakyReLU, FCNLeakyReLUSmallWithNoBias, FCNLeakyReLUSmall, FCNLeakyReLUSmallSoftmax
-from core.network.fcn_relu import FCNReLU, FCNReLUSmallWithNoBias, FCNReLUSmall, FCNReLUSmallSoftmax, FullyConnectedReLUWithHooks
-from core.network.fcn_tanh import FCNTanh, FCNTanhSmallWithNoBias, FCNTanhSmall, FCNTanhSmallSoftmax
-from core.network.cnn_relu import CNNReLU
+from core.network.fcn_relu import FCNReLU, FCNReLUWithHooks
 
 from core.learner.sl.sgd import SGDLearner
 from core.learner.sl.weight_clipping import WeightClippingLearner
@@ -26,19 +23,8 @@ tasks = {
 
 networks = {
     "fcn_relu": FCNReLU,
-    "fcn_relu_hooks": FullyConnectedReLUWithHooks,
-    "fcn_relu_small": FCNReLUSmall,
-    "fcn_relu_small_softmax": FCNReLUSmallSoftmax,
-    "fcn_relu_small_no_bias": FCNReLUSmallWithNoBias,
-    "fcn_leakyrelu": FCNLeakyReLU,
-    "fcn_leakyrelu_small": FCNLeakyReLUSmall,
-    "fcn_leakyrelu_small_softmax": FCNLeakyReLUSmallSoftmax,
-    "fcn_leakyrelu_small_no_bias": FCNLeakyReLUSmallWithNoBias,
-    "fcn_tanh": FCNTanh,
-    "fcn_tanh_small": FCNTanhSmall,
-    "fcn_tanh_small_softmax": FCNTanhSmallSoftmax,
-    "fcn_tanh_small_no_bias": FCNTanhSmallWithNoBias,
-    "cnn_relu": CNNReLU,
+    "fcn_relu_hooks": FCNReLUWithHooks,
+
 }
 
 learners = {
