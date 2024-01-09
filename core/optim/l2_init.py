@@ -12,11 +12,11 @@ class L2Init(torch.optim.Optimizer):
         self.zero_grad()
         loss = closure()
         loss.backward()
+        self.optimizer.step()
         for group in self.param_groups:
             for p in group["params"]:
                 state = self.state[p]
                 if len(state) == 0:
                     state["init_weights"] = p.data.clone()
                 p.data.add_(group["weight_decay"] * state["init_weights"], alpha=group["lr"])
-        self.optimizer.step()
         return loss

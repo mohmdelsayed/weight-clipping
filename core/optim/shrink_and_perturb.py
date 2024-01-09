@@ -12,9 +12,9 @@ class ShrinkAndPerturb(torch.optim.Optimizer):
         self.zero_grad()
         loss = closure()
         loss.backward()
+        self.optimizer.step()
         for group in self.param_groups:
             for p in group["params"]:
                 perturbation = torch.randn_like(p.data) * group["sigma"]
                 p.data.add_(perturbation, alpha=-group["lr"])
-        self.optimizer.step()
         return loss
