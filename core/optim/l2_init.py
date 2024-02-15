@@ -19,4 +19,4 @@ class L2Init(torch.optim.Optimizer):
                 if len(state) == 0:
                     state["init_weights"] = p.data.clone()
                 p.data.add_(group["weight_decay"] * state["init_weights"], alpha=group["lr"])
-        return loss
+        return loss, 0.0

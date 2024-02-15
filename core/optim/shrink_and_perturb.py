@@ -17,4 +17,4 @@ class ShrinkAndPerturb(torch.optim.Optimizer):
             for p in group["params"]:
                 perturbation = torch.randn_like(p.data) * group["sigma"]
                 p.data.add_(perturbation, alpha=-group["lr"])
-        return loss
+        return loss, 0.0

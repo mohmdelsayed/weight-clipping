@@ -23,8 +23,8 @@ class InitBounds:
             raise ValueError("Unsupported tensor dimension: {}".format(p.dim()))
 
 class WeightClipping(torch.optim.Optimizer):
-    def __init__(self, params, beta=1.0, optimizer=torch.optim.Adam, clip_last_layer=True, **kwargs):
-        defaults = dict(beta=beta, clip_last_layer=clip_last_layer)
+    def __init__(self, params, zeta=1.0, optimizer=torch.optim.Adam, clip_last_layer=True, **kwargs):
+        defaults = dict(zeta=zeta, clip_last_layer=clip_last_layer)
         super(WeightClipping, self).__init__(params, defaults)
         self.optimizer = optimizer(self.param_groups, **kwargs)
         self.param_groups = self.optimizer.param_groups
@@ -36,14 +36,18 @@ class WeightClipping(torch.optim.Optimizer):
         loss = closure()
         loss.backward()
         self.optimizer.step()
-        self.weight_clipping()
-        return loss
+        proportion = self.weight_clipping()
+        return loss, proportion
 
     def weight_clipping(self):
+        clipped_sum, total_sum = 0.0, 0.0
         for group in self.param_groups:
             for i, p in enumerate(group["params"]):
                 if i >= len(group["params"])-2 and not group["clip_last_layer"]:
                     # do not clip last layer of weights/biases
                     continue
                 bound = self.init_bounds.get(p)
-                p.data.clamp_(-group["beta"] * bound, group["beta"] * bound)
+                clipped_sum += (p.data.abs() > group["zeta"] * bound).float().sum()
+                total_sum += p.data.numel()
+                p.data.clamp_(-group["zeta"] * bound, group["zeta"] * bound)
+        return clipped_sum / total_sum

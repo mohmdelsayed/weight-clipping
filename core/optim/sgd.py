@@ -9,4 +9,4 @@ class SGD(torch.optim.SGD):
         loss = closure()
         loss.backward()
         super(SGD, self).step(closure)
-        return loss
+        return loss, 0.0

@@ -9,4 +9,4 @@ class Adam(torch.optim.Adam):
         loss = closure()
         loss.backward()
         super(Adam, self).step(closure)
-        return loss
+        return loss, 0.0
