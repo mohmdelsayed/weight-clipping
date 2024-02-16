@@ -28,14 +28,17 @@ class SLRun:
 
     def start(self):
         torch.manual_seed(self.seed)
-        losses_per_step_size = []
+        losses_per_task = []
+        clipping_proportion_per_task = []
         if self.task.criterion == 'cross_entropy':
-            accuracy_per_step_size = []
+            accuracy_per_task = []
         self.learner.setup_task(self.task)
         criterion = criterions[self.task.criterion]()
-        l = []
-        a = []
-        clipping_proportion = []
+        losses_per_step = []
+        clipping_proportion_per_step = []
+        if self.task.criterion == 'cross_entropy':
+            accuracy_per_step = []
+
         for i in range(self.n_samples):
             input, target = next(self.task)
             input, target = input.to(self.device), target.to(self.device)
@@ -44,25 +47,29 @@ class SLRun:
                 loss = criterion(output, target)
                 return loss
             loss, proportion = self.learner.update_params(closure=closure)
-            # check if loss is nan
-            if torch.isnan(loss):
-                raise ValueError("Loss is nan")
-            losses_per_step_size.append(loss.item())
-            l.append(loss.item())
-            a.append((output.argmax(dim=1) == target).float().mean().item())
-            clipping_proportion.append(proportion)
+            losses_per_step.append(loss.item())
+            clipping_proportion_per_step.append(proportion)
             if self.task.criterion == 'cross_entropy':
-                accuracy_per_step_size.append((output.argmax(dim=1) == target).float().mean().item())
-            if i % self.task.change_freq == 0 and len(a) > 0:
-                avg_l = sum(l)/len(l)
-                avg_a = sum(a)/len(a)
-                print(f"Task {i/self.task.change_freq}: loss {avg_l}, accuracy {avg_a}, clipping proportion {sum(clipping_proportion)/len(clipping_proportion)}")
-                l = []
-                a = []
-                clipping_proportion = []
+                accuracy_per_step.append((output.argmax(dim=1) == target).float().mean().item())
+
+            if i % self.task.change_freq == 0 and i > 0:
+                avg_a = sum(accuracy_per_step) / len(accuracy_per_step)
+                avg_l = sum(losses_per_step) / len(losses_per_step)
+                avg_clipping = sum(clipping_proportion_per_step) / len(clipping_proportion_per_step)
+                print(f"Task {i/self.task.change_freq}: loss {avg_l}, accuracy {avg_a}, clipping proportion {avg_clipping}")
+                losses_per_task.append(avg_l)
+                if self.task.criterion == 'cross_entropy':
+                    accuracy_per_task.append(avg_a)
+                clipping_proportion_per_task.append(avg_clipping)
+
+                losses_per_step = []
+                if self.task.criterion == 'cross_entropy':
+                    accuracy_per_step = []
+                clipping_proportion_per_step = []
 
         logging_data = {
-                'losses': losses_per_step_size,
+                'losses': losses_per_task,
+                'clipping_proportion': clipping_proportion_per_task,
                 'exp_name': self.exp_name,
                 'task': self.task.name,
                 'learner': self.learner.name,
@@ -73,7 +80,7 @@ class SLRun:
         }
 
         if self.task.criterion == 'cross_entropy':
-            logging_data['accuracies'] = accuracy_per_step_size
+            logging_data['accuracies'] = accuracy_per_task
 
         self.logger.log(**logging_data)
 
