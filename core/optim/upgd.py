@@ -36,7 +36,7 @@ class UPGD(torch.optim.Optimizer):
         return loss, 0.0
 
 class AdaptiveUPGD(torch.optim.Optimizer):
-    def __init__(self, params, lr=1e-5, weight_decay=0.001, beta_utility=0.999, sigma=0.001, beta1=0.9, beta2=0.999, eps=1e-5):
+    def __init__(self, params, lr=1e-5, weight_decay=0.001, beta_utility=0.999, sigma=0.001, beta1=0.9, beta2=0.999, eps=1e-8):
         defaults = dict(lr=lr, weight_decay=weight_decay, beta_utility=beta_utility, sigma=sigma, beta1=beta1, beta2=beta2, eps=eps)
         super(AdaptiveUPGD, self).__init__(params, defaults)
     def step(self, closure=None):
