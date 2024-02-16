@@ -17,23 +17,24 @@ from core.utils import create_script_generator, create_script_runner, tasks
 exp_name = "exp2_stats"
 task = LabelPermutedEMNIST()
 total_steps = 1000000
+n_seeds = 10
 
 sgd_grid = GridSearch(
-               seed=[i for i in range(0, 20)],
+               seed=[i for i in range(0, n_seeds)],
                lr=[0.1, 0.01, 0.001, 0.0001],
                network=[FCNReLU()],
                n_samples=[total_steps],
     )
 
 adam_grid = GridSearch(
-               seed=[i for i in range(0, 20)],
+               seed=[i for i in range(0, n_seeds)],
                lr=[0.01, 0.001, 0.0001, 0.00001],
                network=[FCNReLU()],
                n_samples=[total_steps],
     )
 
 l2_init_sgd_grid = GridSearch(
-               seed=[i for i in range(0, 20)],
+               seed=[i for i in range(0, n_seeds)],
                lr=[0.1, 0.01, 0.001, 0.0001],
                weight_decay=[0.1, 0.01, 0.001, 0.0001],
                network=[FCNReLU()],
@@ -41,7 +42,7 @@ l2_init_sgd_grid = GridSearch(
     )
 
 l2_init_adam_grid = GridSearch(
-               seed=[i for i in range(0, 20)],
+               seed=[i for i in range(0, n_seeds)],
                lr=[0.01, 0.001, 0.0001, 0.00001],
                weight_decay=[0.1, 0.01, 0.001, 0.0001],
                network=[FCNReLU()],
@@ -49,16 +50,15 @@ l2_init_adam_grid = GridSearch(
     )
 
 madam_grid = GridSearch(
-               seed=[i for i in range(0, 20)],
+               seed=[i for i in range(0, n_seeds)],
                lr=[0.1, 0.01, 0.001, 0.0001],
                p_scale=[1.0, 2.0, 3.0, 4.0, 5.0],
-               g_bound=[10.0],
                network=[FCNReLU()],
                n_samples=[total_steps],
     )
 
 shrink_and_perturb_sgd_grid = GridSearch(
-                seed=[i for i in range(0, 20)],
+                seed=[i for i in range(0, n_seeds)],
                 lr=[0.1, 0.01, 0.001, 0.0001],
                 sigma=[0.0, 0.1, 0.01, 0.001],
                 weight_decay=[0.0, 0.1, 0.01, 0.001],
@@ -67,7 +67,7 @@ shrink_and_perturb_sgd_grid = GridSearch(
      )
 
 shrink_and_perturb_adam_grid = GridSearch(
-                seed=[i for i in range(0, 20)],
+                seed=[i for i in range(0, n_seeds)],
                 lr=[0.01, 0.001, 0.0001, 0.00001],
                 sigma=[0.0, 0.1, 0.01, 0.001],
                 weight_decay=[0.0, 0.1, 0.01, 0.001],
@@ -76,7 +76,7 @@ shrink_and_perturb_adam_grid = GridSearch(
      )
 
 weight_clipping_sgd_grid = GridSearch(
-               seed=[i for i in range(0, 20)],
+               seed=[i for i in range(0, n_seeds)],
                lr=[0.1, 0.01, 0.001, 0.0001],
                zeta=[1.0, 2.0, 3.0, 4.0, 5.0],
                network=[FCNReLU()],
@@ -85,7 +85,7 @@ weight_clipping_sgd_grid = GridSearch(
 
 
 weight_clipping_adam_grid = GridSearch(
-               seed=[i for i in range(0, 20)],
+               seed=[i for i in range(0, n_seeds)],
                lr=[0.01, 0.001, 0.0001, 0.00001],
                zeta=[1.0, 2.0, 3.0, 4.0, 5.0],
                network=[FCNReLU()],
@@ -94,9 +94,9 @@ weight_clipping_adam_grid = GridSearch(
 
 
 upgd_grid = GridSearch(
-               seed=[i for i in range(0, 20)],
+               seed=[i for i in range(0, n_seeds)],
                lr=[0.1, 0.01, 0.001, 0.0001],
-               beta_utility=[0.9, 0.99, 0.999, 0.9999],
+               beta_utility=[0.9, 0.99, 0.999],
                weight_decay=[0.1, 0.01, 0.001, 0.0001],
                sigma=[0.0, 0.1, 0.01, 0.001],
                network=[FCNReLU()],
@@ -105,9 +105,9 @@ upgd_grid = GridSearch(
 
 
 adaupgd_adam_grid = GridSearch(
-               seed=[i for i in range(0, 20)],
+               seed=[i for i in range(0, n_seeds)],
                lr=[0.01, 0.001, 0.0001, 0.00001],
-               beta_utility=[0.9, 0.99, 0.999, 0.9999],
+               beta_utility=[0.9, 0.99, 0.999],
                weight_decay=[0.1, 0.01, 0.001, 0.0001],
                sigma=[0.0, 0.1, 0.01, 0.001],
                network=[FCNReLU()],
