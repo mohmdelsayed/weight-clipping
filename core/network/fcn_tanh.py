@@ -41,4 +41,4 @@ class FCNTanhWithHooks(nn.Sequential):
         return self.name
 
     def activation_hook(self, name, module, inp, out):
-        self.activations[name] = torch.sum(out > 0.9).item()
+        self.activations[name] = torch.sum(out.abs() > 0.9).item()
