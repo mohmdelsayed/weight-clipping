@@ -12,6 +12,7 @@ from core.learner.sl.weight_clipping import WeightClippingAdamLearner, WeightCli
 from core.learner.sl.shrink_and_pertub import ShrinkAndPerturbSGD, ShrinkAndPerturbAdam
 from core.learner.sl.adam import AdamLearner
 from core.learner.sl.l2_init import L2InitSGDLearner, L2InitAdamLearner
+from core.learner.sl.upgd import AdaUPGDLearner, UPGDLearner
 from core.learner.sl.madam import MadamLearner
 import torch
 
@@ -41,6 +42,8 @@ learners = {
     "shrink_and_perturb_sgd": ShrinkAndPerturbSGD,
     "shrink_and_perturb_adam": ShrinkAndPerturbAdam,
     "madam": MadamLearner,
+    "upgd": UPGDLearner,
+    "adaupgd": AdaUPGDLearner,
 }
 
 criterions = {
