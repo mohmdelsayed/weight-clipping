@@ -1,8 +1,14 @@
 from core.learner.sl.learner import Learner
-from core.optim.weight_clipping import WeightClipping
+from core.optim.weight_clipping import WeightClippingAdam, WeightClippingSGD
 
-class WeightClippingLearner(Learner):
+class WeightClippingAdamLearner(Learner):
     def __init__(self, network=None, optim_kwargs={}):
-        optimizer = WeightClipping
-        name = "weight_clipping"
+        optimizer = WeightClippingAdam
+        name = "weight_clipping_adam"
+        super().__init__(name, network, optimizer, optim_kwargs)
+
+class WeightClippingSGDLearner(Learner):
+    def __init__(self, network=None, optim_kwargs={}):
+        optimizer = WeightClippingSGD
+        name = "weight_clipping_sgd"
         super().__init__(name, network, optimizer, optim_kwargs)

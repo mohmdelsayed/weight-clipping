@@ -3,15 +3,15 @@ from core.task.label_permuted_emnist import LabelPermutedEMNIST
 from core.task.input_permuted_mnist import InputPermutedMNIST
 from core.task.label_permuted_mnist import LabelPermutedMNIST
 
-from core.network.fcn_relu import FCNReLU
+from core.network.fcn_relu import FCNReLU, FCNReLUWithHooks
 from core.network.fcn_tanh import FCNTanh
 from core.network.fcn_leakyrelu import FCNLeakyReLU
 
 from core.learner.sl.sgd import SGDLearner
-from core.learner.sl.weight_clipping import WeightClippingLearner
-from core.learner.sl.shrink_and_pertub import ShrinkAndPerturbLearner
+from core.learner.sl.weight_clipping import WeightClippingAdamLearner, WeightClippingSGDLearner
+from core.learner.sl.shrink_and_pertub import ShrinkAndPerturbSGD, ShrinkAndPerturbAdam
 from core.learner.sl.adam import AdamLearner
-from core.learner.sl.l2_init import L2InitLearner
+from core.learner.sl.l2_init import L2InitSGDLearner, L2InitAdamLearner
 from core.learner.sl.madam import MadamLearner
 import torch
 
@@ -28,14 +28,18 @@ networks = {
     "fcn_relu": FCNReLU,
     "fcn_tanh": FCNTanh,
     "fcn_leakyrelu": FCNLeakyReLU,
+    "fcn_relu_with_hooks": FCNReLUWithHooks,
 }
 
 learners = {
     "sgd": SGDLearner,
-    "weight_clipping": WeightClippingLearner,
+    "weight_clipping_sgd": WeightClippingSGDLearner,
+    "weight_clipping_adam": WeightClippingAdamLearner,
     "adam": AdamLearner,
-    "l2_init": L2InitLearner,
-    "shrink_and_perturb": ShrinkAndPerturbLearner,
+    "l2_init_sgd": L2InitSGDLearner,
+    "l2_init_adam": L2InitAdamLearner,
+    "shrink_and_perturb_sgd": ShrinkAndPerturbSGD,
+    "shrink_and_perturb_adam": ShrinkAndPerturbAdam,
     "madam": MadamLearner,
 }
 
