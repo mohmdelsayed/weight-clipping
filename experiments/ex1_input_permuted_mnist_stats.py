@@ -14,21 +14,22 @@ from core.task.input_permuted_mnist import InputPermutedMNIST
 from core.run.sl_stats import RunStats
 from core.utils import create_script_generator, create_script_runner, tasks
 
-exp_name = "exp1"
+exp_name = "exp1_stats"
 task = InputPermutedMNIST()
+total_steps = 1000000
 
 sgd_grid = GridSearch(
                seed=[i for i in range(0, 20)],
                lr=[0.1, 0.01, 0.001, 0.0001],
                network=[FCNReLU()],
-               n_samples=[1000000],
+               n_samples=[total_steps],
     )
 
 adam_grid = GridSearch(
                seed=[i for i in range(0, 20)],
                lr=[0.01, 0.001, 0.0001, 0.00001],
                network=[FCNReLU()],
-               n_samples=[1000000],
+               n_samples=[total_steps],
     )
 
 l2_init_sgd_grid = GridSearch(
@@ -36,7 +37,7 @@ l2_init_sgd_grid = GridSearch(
                lr=[0.1, 0.01, 0.001, 0.0001],
                weight_decay=[0.1, 0.01, 0.001, 0.0001],
                network=[FCNReLU()],
-               n_samples=[1000000],
+               n_samples=[total_steps],
     )
 
 l2_init_adam_grid = GridSearch(
@@ -44,17 +45,16 @@ l2_init_adam_grid = GridSearch(
                lr=[0.01, 0.001, 0.0001, 0.00001],
                weight_decay=[0.1, 0.01, 0.001, 0.0001],
                network=[FCNReLU()],
-               n_samples=[1000000],
+               n_samples=[total_steps],
     )
 
 madam_grid = GridSearch(
                seed=[i for i in range(0, 20)],
                lr=[0.1, 0.01, 0.001, 0.0001],
-               beta=[0.999],
                p_scale=[1.0, 2.0, 3.0, 4.0, 5.0],
                g_bound=[10.0],
                network=[FCNReLU()],
-               n_samples=[1000000],
+               n_samples=[total_steps],
     )
 
 shrink_and_perturb_sgd_grid = GridSearch(
@@ -63,7 +63,7 @@ shrink_and_perturb_sgd_grid = GridSearch(
                 sigma=[0.0, 0.1, 0.01, 0.001],
                 weight_decay=[0.0, 0.1, 0.01, 0.001],
                 network=[FCNReLU()],
-                n_samples=[1000000],
+                n_samples=[total_steps],
      )
 
 shrink_and_perturb_adam_grid = GridSearch(
@@ -72,7 +72,7 @@ shrink_and_perturb_adam_grid = GridSearch(
                 sigma=[0.0, 0.1, 0.01, 0.001],
                 weight_decay=[0.0, 0.1, 0.01, 0.001],
                 network=[FCNReLU()],
-                n_samples=[1000000],
+                n_samples=[total_steps],
      )
 
 weight_clipping_sgd_grid = GridSearch(
@@ -80,7 +80,7 @@ weight_clipping_sgd_grid = GridSearch(
                lr=[0.1, 0.01, 0.001, 0.0001],
                zeta=[1.0, 2.0, 3.0, 4.0, 5.0],
                network=[FCNReLU()],
-               n_samples=[1000000],
+               n_samples=[total_steps],
     )
 
 
@@ -89,7 +89,7 @@ weight_clipping_adam_grid = GridSearch(
                lr=[0.01, 0.001, 0.0001, 0.00001],
                zeta=[1.0, 2.0, 3.0, 4.0, 5.0],
                network=[FCNReLU()],
-               n_samples=[1000000],
+               n_samples=[total_steps],
     )
 
 
@@ -100,7 +100,7 @@ upgd_grid = GridSearch(
                weight_decay=[0.1, 0.01, 0.001, 0.0001],
                sigma=[0.0, 0.1, 0.01, 0.001],
                network=[FCNReLU()],
-               n_samples=[1000000],
+               n_samples=[total_steps],
     )
 
 
@@ -111,7 +111,7 @@ adaupgd_adam_grid = GridSearch(
                weight_decay=[0.1, 0.01, 0.001, 0.0001],
                sigma=[0.0, 0.1, 0.01, 0.001],
                network=[FCNReLU()],
-               n_samples=[1000000],
+               n_samples=[total_steps],
     )
 
 
