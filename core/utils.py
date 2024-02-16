@@ -4,8 +4,8 @@ from core.task.input_permuted_mnist import InputPermutedMNIST
 from core.task.label_permuted_mnist import LabelPermutedMNIST
 
 from core.network.fcn_relu import FCNReLU, FCNReLUWithHooks
-from core.network.fcn_tanh import FCNTanh
-from core.network.fcn_leakyrelu import FCNLeakyReLU
+from core.network.fcn_tanh import FCNTanh, FCNTanhWithHooks
+from core.network.fcn_leakyrelu import FCNLeakyReLU, FCNLeakyReLUWithHooks
 
 from core.learner.sl.sgd import SGDLearner
 from core.learner.sl.weight_clipping import WeightClippingAdamLearner, WeightClippingSGDLearner
@@ -30,6 +30,8 @@ networks = {
     "fcn_tanh": FCNTanh,
     "fcn_leakyrelu": FCNLeakyReLU,
     "fcn_relu_with_hooks": FCNReLUWithHooks,
+    "fcn_tanh_with_hooks": FCNTanhWithHooks,
+    "fcn_leakyrelu_with_hooks": FCNLeakyReLUWithHooks,
 }
 
 learners = {
