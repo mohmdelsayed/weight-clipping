@@ -34,4 +34,4 @@ class Madam(Optimizer):
                 clipped_sum += (p.data.abs() > state['max']).float().sum()
                 total_sum += p.data.numel()
                 p.data.clamp_(-state['max'], state['max'])
-        return loss, clipped_sum / total_sum
+        return loss, (clipped_sum / total_sum).item()

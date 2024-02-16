@@ -9,7 +9,7 @@ from core.network.fcn_leakyrelu import FCNLeakyReLU
 
 from core.learner.sl.sgd import SGDLearner
 from core.learner.sl.weight_clipping import WeightClippingAdamLearner, WeightClippingSGDLearner
-from core.learner.sl.shrink_and_pertub import ShrinkAndPerturbSGD, ShrinkAndPerturbAdam
+from core.learner.sl.shrink_and_pertub import ShrinkAndPerturbSGDLearner, ShrinkAndPerturbAdamLearner
 from core.learner.sl.adam import AdamLearner
 from core.learner.sl.l2_init import L2InitSGDLearner, L2InitAdamLearner
 from core.learner.sl.upgd import AdaUPGDLearner, UPGDLearner
@@ -39,8 +39,8 @@ learners = {
     "adam": AdamLearner,
     "l2_init_sgd": L2InitSGDLearner,
     "l2_init_adam": L2InitAdamLearner,
-    "shrink_and_perturb_sgd": ShrinkAndPerturbSGD,
-    "shrink_and_perturb_adam": ShrinkAndPerturbAdam,
+    "shrink_and_perturb_sgd": ShrinkAndPerturbSGDLearner,
+    "shrink_and_perturb_adam": ShrinkAndPerturbAdamLearner,
     "madam": MadamLearner,
     "upgd": UPGDLearner,
     "adaupgd": AdaUPGDLearner,

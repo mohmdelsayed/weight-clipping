@@ -50,7 +50,7 @@ class WeightClippingSGD(torch.optim.Optimizer):
                 clipped_sum += (p.data.abs() > group["zeta"] * bound).float().sum()
                 total_sum += p.data.numel()
                 p.data.clamp_(-group["zeta"] * bound, group["zeta"] * bound)
-        return clipped_sum / total_sum
+        return (clipped_sum / total_sum).item()
 
 class WeightClippingAdam(torch.optim.Optimizer):
     def __init__(self, params, zeta=1.0, optimizer=torch.optim.Adam, clip_last_layer=True, **kwargs):
@@ -80,4 +80,4 @@ class WeightClippingAdam(torch.optim.Optimizer):
                 clipped_sum += (p.data.abs() > group["zeta"] * bound).float().sum()
                 total_sum += p.data.numel()
                 p.data.clamp_(-group["zeta"] * bound, group["zeta"] * bound)
-        return clipped_sum / total_sum
+        return (clipped_sum / total_sum).item()

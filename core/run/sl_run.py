@@ -39,7 +39,7 @@ class SLRun:
         if self.task.criterion == 'cross_entropy':
             accuracy_per_step = []
 
-        for i in range(self.n_samples):
+        for i in range(self.n_samples+1):
             input, target = next(self.task)
             input, target = input.to(self.device), target.to(self.device)
             output = self.learner.predict(input)
