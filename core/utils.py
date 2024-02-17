@@ -2,6 +2,7 @@ from core.task.stationary_mnist import StationaryMNIST
 from core.task.label_permuted_emnist import LabelPermutedEMNIST
 from core.task.input_permuted_mnist import InputPermutedMNIST
 from core.task.label_permuted_mnist import LabelPermutedMNIST
+from core.task.label_permuted_mini_imagenet import LabelPermutedMiniImageNet
 
 from core.network.fcn_relu import FCNReLU, FCNReLUWithHooks
 from core.network.fcn_tanh import FCNTanh, FCNTanhWithHooks
@@ -21,7 +22,7 @@ tasks = {
     "stationary_mnist" : StationaryMNIST,
     "input_permuted_mnist": InputPermutedMNIST,
     "label_permuted_emnist" : LabelPermutedEMNIST,
-    "label_permuted_mnist" : LabelPermutedMNIST,
+    "label_permuted_mini_imagenet" : LabelPermutedMiniImageNet,
 }
 
 

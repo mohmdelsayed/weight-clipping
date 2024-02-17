@@ -6,16 +6,16 @@ from core.learner.sl.madam import MadamLearner
 from core.learner.sl.shrink_and_pertub import ShrinkAndPerturbSGDLearner, ShrinkAndPerturbAdamLearner
 from core.learner.sl.weight_clipping import WeightClippingSGDLearner, WeightClippingAdamLearner
 from core.learner.sl.upgd import UPGDLearner, AdaUPGDLearner
-from core.network.fcn_relu import FCNReLUWithHooks as FCNReLU
-from core.network.fcn_tanh import FCNTanhWithHooks as FCNTanh
-from core.network.fcn_leakyrelu import FCNLeakyReLUWithHooks as FCNLeakyReLU
+from core.network.fcn_relu import FCNReLU
+from core.network.fcn_tanh import FCNTanh
+from core.network.fcn_leakyrelu import FCNLeakyReLU
 from core.runner import Runner
-from core.task.input_permuted_mnist import InputPermutedMNIST
-from core.run.sl_stats import RunStats
+from core.task.label_permuted_mini_imagenet import LabelPermutedMiniImageNet
+from core.run.sl_run import SLRun
 from core.utils import create_script_generator, create_script_runner, tasks
 
-exp_name = "exp1_stats"
-task = InputPermutedMNIST()
+exp_name = "exp3"
+task = LabelPermutedMiniImageNet()
 total_steps = 1000000
 n_seeds = 10
 
@@ -96,7 +96,7 @@ weight_clipping_adam_grid = GridSearch(
 upgd_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.1, 0.01, 0.001, 0.0001],
-               beta_utility=[0.99, 0.999, 0.9999],
+               beta_utility=[0.9, 0.99, 0.999],
                weight_decay=[0.1, 0.01, 0.001, 0.0001],
                sigma=[0.0, 0.1, 0.01, 0.001],
                network=[FCNReLU()],
@@ -107,7 +107,7 @@ upgd_grid = GridSearch(
 adaupgd_adam_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.01, 0.001, 0.0001, 0.00001],
-               beta_utility=[0.99, 0.999, 0.9999],
+               beta_utility=[0.9, 0.99, 0.999],
                weight_decay=[0.1, 0.01, 0.001, 0.0001],
                sigma=[0.0, 0.1, 0.01, 0.001],
                network=[FCNReLU()],
@@ -145,7 +145,7 @@ learners = [
 
 save_dir = "generated_cmds"
 for learner, grid in zip(learners, grids):
-    runner = Runner(RunStats(), learner, task, grid, exp_name)
+    runner = Runner(SLRun(), learner, task, grid, exp_name)
     num_jobs = runner.write_cmd(save_dir)
     create_script_generator(save_dir, exp_name, learner.name, num_jobs, time="1:00:00", memory="1G")
 create_script_runner(save_dir, exp_name)

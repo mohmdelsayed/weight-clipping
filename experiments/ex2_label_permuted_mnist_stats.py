@@ -7,8 +7,8 @@ from core.learner.sl.shrink_and_pertub import ShrinkAndPerturbSGDLearner, Shrink
 from core.learner.sl.weight_clipping import WeightClippingSGDLearner, WeightClippingAdamLearner
 from core.learner.sl.upgd import UPGDLearner, AdaUPGDLearner
 from core.network.fcn_relu import FCNReLUWithHooks as FCNReLU
-from core.network.fcn_tanh import FCNTanh
-from core.network.fcn_leakyrelu import FCNLeakyReLU
+from core.network.fcn_tanh import FCNTanhWithHooks as FCNTanh
+from core.network.fcn_leakyrelu import FCNLeakyReLUWithHooks as FCNLeakyReLU
 from core.runner import Runner
 from core.task.label_permuted_emnist import LabelPermutedEMNIST
 from core.run.sl_stats import RunStats

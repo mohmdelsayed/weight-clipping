@@ -10,12 +10,12 @@ from core.network.fcn_relu import FCNReLUWithHooks as FCNReLU
 from core.network.fcn_tanh import FCNTanhWithHooks as FCNTanh
 from core.network.fcn_leakyrelu import FCNLeakyReLUWithHooks as FCNLeakyReLU
 from core.runner import Runner
-from core.task.input_permuted_mnist import InputPermutedMNIST
+from core.task.label_permuted_mini_imagenet import LabelPermutedMiniImageNet
 from core.run.sl_stats import RunStats
 from core.utils import create_script_generator, create_script_runner, tasks
 
-exp_name = "exp1_stats"
-task = InputPermutedMNIST()
+exp_name = "exp3_stats"
+task = LabelPermutedMiniImageNet()
 total_steps = 1000000
 n_seeds = 10
 
@@ -96,7 +96,7 @@ weight_clipping_adam_grid = GridSearch(
 upgd_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.1, 0.01, 0.001, 0.0001],
-               beta_utility=[0.99, 0.999, 0.9999],
+               beta_utility=[0.9, 0.99, 0.999],
                weight_decay=[0.1, 0.01, 0.001, 0.0001],
                sigma=[0.0, 0.1, 0.01, 0.001],
                network=[FCNReLU()],
@@ -107,7 +107,7 @@ upgd_grid = GridSearch(
 adaupgd_adam_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.01, 0.001, 0.0001, 0.00001],
-               beta_utility=[0.99, 0.999, 0.9999],
+               beta_utility=[0.9, 0.99, 0.999],
                weight_decay=[0.1, 0.01, 0.001, 0.0001],
                sigma=[0.0, 0.1, 0.01, 0.001],
                network=[FCNReLU()],
