@@ -66,10 +66,10 @@ def create_script_generator(dir_name, exp_name, learner_name, num_jobs, time='01
 #SBATCH --array=1-{num_jobs}
 #SBATCH --account=def-ashique
 cd ../../
-FILE="$SCRATCH/HesScale/generated_cmds/{exp_name}/{learner_name}.txt"
+FILE="$SCRATCH/weight-clipping/generated_cmds/{exp_name}/{learner_name}.txt"
 SCRIPT=$(sed -n "${{SLURM_ARRAY_TASK_ID}}p" $FILE)
 module load python/3.7.9
-source $SCRATCH/HesScale/.hesscale/bin/activate
+source $SCRATCH/weight-clipping/.wc/bin/activate
 srun $SCRIPT
 '''
 
