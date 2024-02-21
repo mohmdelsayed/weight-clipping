@@ -54,7 +54,7 @@ class UPGDWithWC(torch.optim.Optimizer):
                 scaled_utility = torch.sigmoid_((state["avg_utility"] / bias_correction_utility) / global_max_util)
                 p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(
                     (p.grad.data + noise) * (1-scaled_utility),
-                    alpha=-2.0*group["lr"],
+                    alpha=-group["lr"],
                 )
         proportion = self.weight_clipping()
         return loss, proportion

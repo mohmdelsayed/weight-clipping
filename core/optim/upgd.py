@@ -31,7 +31,7 @@ class UPGD(torch.optim.Optimizer):
                 scaled_utility = torch.sigmoid_((state["avg_utility"] / bias_correction_utility) / global_max_util)
                 p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(
                     (p.grad.data + noise) * (1-scaled_utility),
-                    alpha=-2.0*group["lr"],
+                    alpha=-group["lr"],
                 )
         return loss, 0.0
 
@@ -75,6 +75,6 @@ class AdaptiveUPGD(torch.optim.Optimizer):
                 scaled_utility = torch.sigmoid_((state["avg_utility"] / bias_correction_utility) / global_max_util)
                 p.data.mul_(1 - group["lr"] * group["weight_decay"]).add_(
                     (exp_avg * (1 - scaled_utility)) / (exp_avg_sq.sqrt() + group["eps"]) + noise * (1-scaled_utility),
-                    alpha=-2.0*group["lr"],
+                    alpha=-group["lr"],
                 )
         return loss, 0.0
