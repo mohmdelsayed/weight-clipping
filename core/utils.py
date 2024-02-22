@@ -1,6 +1,6 @@
 from core.task.stationary_mnist import StationaryMNIST
 from core.task.label_permuted_emnist import LabelPermutedEMNIST
-from core.task.input_permuted_mnist import InputPermutedMNIST
+from core.task.input_permuted_mnist import InputPermutedMNIST5K, InputPermutedMNIST50K
 from core.task.label_permuted_mnist import LabelPermutedMNIST
 from core.task.label_permuted_mini_imagenet import LabelPermutedMiniImageNet
 
@@ -21,7 +21,8 @@ import torch
 
 tasks = {
     "stationary_mnist" : StationaryMNIST,
-    "input_permuted_mnist": InputPermutedMNIST,
+    "input_permuted_mnist_5k": InputPermutedMNIST5K,
+    "input_permuted_mnist_50k": InputPermutedMNIST50K,
     "label_permuted_emnist" : LabelPermutedEMNIST,
     "label_permuted_mini_imagenet" : LabelPermutedMiniImageNet,
 }

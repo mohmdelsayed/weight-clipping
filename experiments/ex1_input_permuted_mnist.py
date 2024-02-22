@@ -16,20 +16,20 @@ from core.utils import create_script_generator, create_script_runner, tasks
 
 exp_name = "exp1"
 task = InputPermutedMNIST()
-total_steps = 1000000
-n_seeds = 10
+total_steps = 15000000
+n_seeds = 5
 
 sgd_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.1, 0.01, 0.001, 0.0001],
-               network=[FCNReLU()],
+               network=[FCNReLU(), FCNLeakyReLU()],
                n_samples=[total_steps],
     )
 
 adam_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.01, 0.001, 0.0001, 0.00001],
-               network=[FCNReLU()],
+               network=[FCNReLU(), FCNLeakyReLU()],
                n_samples=[total_steps],
     )
 
@@ -37,7 +37,7 @@ l2_init_sgd_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.1, 0.01, 0.001, 0.0001],
                weight_decay=[0.1, 0.01, 0.001, 0.0001],
-               network=[FCNReLU()],
+               network=[FCNReLU(), FCNLeakyReLU()],
                n_samples=[total_steps],
     )
 
@@ -45,7 +45,7 @@ l2_init_adam_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.01, 0.001, 0.0001, 0.00001],
                weight_decay=[0.1, 0.01, 0.001, 0.0001],
-               network=[FCNReLU()],
+               network=[FCNReLU(), FCNLeakyReLU()],
                n_samples=[total_steps],
     )
 
@@ -53,7 +53,7 @@ madam_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.1, 0.01, 0.001, 0.0001],
                p_scale=[1.0, 2.0, 3.0, 4.0, 5.0],
-               network=[FCNReLU()],
+               network=[FCNReLU(), FCNLeakyReLU()],
                n_samples=[total_steps],
     )
 
@@ -62,7 +62,7 @@ shrink_and_perturb_sgd_grid = GridSearch(
                 lr=[0.1, 0.01, 0.001, 0.0001],
                 sigma=[0.0, 0.1, 0.01, 0.001],
                 weight_decay=[0.0, 0.1, 0.01, 0.001],
-                network=[FCNReLU()],
+               network=[FCNReLU(), FCNLeakyReLU()],
                 n_samples=[total_steps],
      )
 
@@ -71,7 +71,7 @@ shrink_and_perturb_adam_grid = GridSearch(
                 lr=[0.01, 0.001, 0.0001, 0.00001],
                 sigma=[0.0, 0.1, 0.01, 0.001],
                 weight_decay=[0.0, 0.1, 0.01, 0.001],
-                network=[FCNReLU()],
+               network=[FCNReLU(), FCNLeakyReLU()],
                 n_samples=[total_steps],
      )
 
@@ -79,7 +79,8 @@ weight_clipping_sgd_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.1, 0.01, 0.001, 0.0001],
                zeta=[1.0, 2.0, 3.0, 4.0, 5.0],
-               network=[FCNReLU()],
+               clip_last_layer=[0, 1],
+               network=[FCNReLU(), FCNLeakyReLU()],
                n_samples=[total_steps],
     )
 
@@ -88,7 +89,8 @@ weight_clipping_adam_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.01, 0.001, 0.0001, 0.00001],
                zeta=[1.0, 2.0, 3.0, 4.0, 5.0],
-               network=[FCNReLU()],
+               clip_last_layer=[0, 1],
+               network=[FCNReLU(), FCNLeakyReLU()],
                n_samples=[total_steps],
     )
 
@@ -99,7 +101,7 @@ upgd_grid = GridSearch(
                beta_utility=[0.99, 0.999, 0.9999],
                weight_decay=[0.1, 0.01, 0.001, 0.0001],
                sigma=[0.0, 0.1, 0.01, 0.001],
-               network=[FCNReLU()],
+               network=[FCNReLU(), FCNLeakyReLU()],
                n_samples=[total_steps],
     )
 
@@ -110,7 +112,7 @@ adaupgd_adam_grid = GridSearch(
                beta_utility=[0.9, 0.99, 0.999, 0.9999],
                weight_decay=[0.1, 0.01, 0.001, 0.0001],
                sigma=[0.0, 0.1, 0.01, 0.001],
-               network=[FCNReLU()],
+               network=[FCNReLU(), FCNLeakyReLU()],
                n_samples=[total_steps],
     )
 
@@ -125,8 +127,8 @@ grids = [
         shrink_and_perturb_adam_grid,
         weight_clipping_sgd_grid,
         weight_clipping_adam_grid,
-        upgd_grid,
-        adaupgd_adam_grid,
+        # upgd_grid,
+        # adaupgd_adam_grid,
 ]
 
 learners = [
@@ -139,13 +141,13 @@ learners = [
     ShrinkAndPerturbAdamLearner(),
     WeightClippingSGDLearner(),
     WeightClippingAdamLearner(),
-    UPGDLearner(),
-    AdaUPGDLearner(),
+    # UPGDLearner(),
+    # AdaUPGDLearner(),
 ]
 
 save_dir = "generated_cmds"
 for learner, grid in zip(learners, grids):
     runner = Runner(SLRun(), learner, task, grid, exp_name)
     num_jobs = runner.write_cmd(save_dir)
-    create_script_generator(save_dir, exp_name, learner.name, num_jobs, time="1:00:00", memory="1G")
+    create_script_generator(save_dir, exp_name, learner.name, num_jobs, time="60:00:00", memory="1G")
 create_script_runner(save_dir, exp_name)
