@@ -3,10 +3,15 @@ from core.task.label_permuted_emnist import LabelPermutedEMNIST
 from core.task.input_permuted_mnist import InputPermutedMNIST5K, InputPermutedMNIST50K
 from core.task.label_permuted_mnist import LabelPermutedMNIST
 from core.task.label_permuted_mini_imagenet import LabelPermutedMiniImageNet
+from core.task.cifar10_offline import CIFAR10
+from core.task.cifar10_offline_nonstationary import CIFAR10Nonstationary
+from core.task.cifar100_offline import CIFAR100
+from core.task.cifar100_offline_nonstationary import CIFAR100Nonstationary
 
 from core.network.fcn_relu import FCNReLU, FCNReLUWithHooks
 from core.network.fcn_tanh import FCNTanh, FCNTanhWithHooks
 from core.network.fcn_leakyrelu import FCNLeakyReLU, FCNLeakyReLUWithHooks
+from core.network.resent18 import ResNet18
 
 from core.learner.sl.sgd import SGDLearner
 from core.learner.sl.weight_clipping import WeightClippingAdamLearner, WeightClippingSGDLearner
@@ -25,6 +30,10 @@ tasks = {
     "input_permuted_mnist_50k": InputPermutedMNIST50K,
     "label_permuted_emnist" : LabelPermutedEMNIST,
     "label_permuted_mini_imagenet" : LabelPermutedMiniImageNet,
+    "cifar10": CIFAR10,
+    "cifar10_nonstationary": CIFAR10Nonstationary,
+    "cifar100": CIFAR100,
+    "cifar100_nonstationary": CIFAR100Nonstationary,
 }
 
 
@@ -35,6 +44,7 @@ networks = {
     "fcn_relu_with_hooks": FCNReLUWithHooks,
     "fcn_tanh_with_hooks": FCNTanhWithHooks,
     "fcn_leakyrelu_with_hooks": FCNLeakyReLUWithHooks,
+    "resnet18": ResNet18,
 }
 
 learners = {
