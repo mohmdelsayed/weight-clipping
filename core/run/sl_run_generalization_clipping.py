@@ -15,9 +15,10 @@ def signal_handler(msg, signal, frame):
     exit(0)
 
 class SLRunGeneralizationClipping:
-    def __init__(self, name='sl_run_generalization_clipping', n_epochs=700, task='cifar10', exp_name='exp5', learner='sgd', save_path="logs", seed=0, network='fcn_relu', **kwargs):
+    def __init__(self, name='sl_run_generalization_clipping', n_epochs=700, zeta=1.0, task='cifar10', exp_name='exp5', learner='sgd', save_path="logs", seed=0, network='fcn_relu', **kwargs):
         self.name = name
         self.n_epochs = int(n_epochs)
+        self.zeta = float(zeta)
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         # self.device = torch.device('mps' if torch.backends.mps.is_available else 'cpu')
         self.task = tasks[task](n_epochs=self.n_epochs)
@@ -76,7 +77,7 @@ class SLRunGeneralizationClipping:
             if i == n_samples // 2:
                 for p in self.learner.network.parameters():
                     bound = init_bounds.get(p)
-                    p.data.clamp_(-bound, bound)
+                    p.data.clamp_(-self.zeta*bound, self.zeta*bound)
 
         logging_data = {
                 'accuracies': accuracy_per_task,
