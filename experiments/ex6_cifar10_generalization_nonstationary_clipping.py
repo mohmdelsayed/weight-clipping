@@ -1,5 +1,5 @@
 from core.grid_search import GridSearch
-from core.learner.sl.adam import AdamLearner
+from core.learner.sl.sgd import SGDLearner
 from core.network.resent18 import ResNet18
 from core.runner import Runner
 from core.task.cifar10_offline_nonstationary import CIFAR10Nonstationary
@@ -11,7 +11,7 @@ task = CIFAR10Nonstationary()
 n_epochs = 300
 n_seeds = 10
 
-adam_grid = GridSearch(
+sgd_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.001],
                network=[ResNet18()],
@@ -19,11 +19,11 @@ adam_grid = GridSearch(
     )
 
 grids = [
-        adam_grid,
+        sgd_grid,
 ]
 
 learners = [
-    AdamLearner(),
+    SGDLearner(),
 ]
 
 save_dir = "generated_cmds"
