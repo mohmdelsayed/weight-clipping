@@ -14,7 +14,7 @@ from core.network.fcn_leakyrelu import FCNLeakyReLU, FCNLeakyReLUWithHooks
 from core.network.resent18 import ResNet18
 
 from core.learner.sl.sgd import SGDLearner
-from core.learner.sl.weight_clipping import WeightClippingAdamLearner, WeightClippingSGDLearner
+from core.learner.sl.weight_clipping import WeightClippingAdamLearner, WeightClippingSGDLearner, WeightClippingRMSpropLearner
 from core.learner.sl.shrink_and_pertub import ShrinkAndPerturbSGDLearner, ShrinkAndPerturbAdamLearner
 from core.learner.sl.adam import AdamLearner
 from core.learner.sl.l2_init import L2InitSGDLearner, L2InitAdamLearner
@@ -51,6 +51,7 @@ learners = {
     "sgd": SGDLearner,
     "weight_clipping_sgd": WeightClippingSGDLearner,
     "weight_clipping_adam": WeightClippingAdamLearner,
+    "weight_clipping_rmsprop": WeightClippingRMSpropLearner,
     "adam": AdamLearner,
     "l2_init_sgd": L2InitSGDLearner,
     "l2_init_adam": L2InitAdamLearner,

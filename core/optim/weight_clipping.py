@@ -81,3 +81,33 @@ class WeightClippingAdam(torch.optim.Optimizer):
                 total_sum += p.data.numel()
                 p.data.clamp_(-group["zeta"] * bound, group["zeta"] * bound)
         return (clipped_sum / total_sum).item()
+
+class WeightClippingRMSprop(torch.optim.Optimizer):
+    def __init__(self, params, zeta=1.0, optimizer=torch.optim.RMSprop, clip_last_layer=True, **kwargs):
+        defaults = dict(zeta=zeta, clip_last_layer=clip_last_layer)
+        super(WeightClippingRMSprop, self).__init__(params, defaults)
+        self.optimizer = optimizer(self.param_groups, **kwargs)
+        self.param_groups = self.optimizer.param_groups
+        self.defaults.update(self.optimizer.defaults)
+        self.init_bounds = InitBounds()
+
+    def step(self, closure=None):
+        self.zero_grad()
+        loss = closure()
+        loss.backward()
+        self.optimizer.step()
+        proportion = self.weight_clipping()
+        return loss, proportion
+
+    def weight_clipping(self):
+        clipped_sum, total_sum = 0.0, 0.0
+        for group in self.param_groups:
+            for i, p in enumerate(group["params"]):
+                if i >= len(group["params"])-2 and not group["clip_last_layer"]:
+                    # do not clip last layer of weights/biases
+                    continue
+                bound = self.init_bounds.get(p)
+                clipped_sum += (p.data.abs() > group["zeta"] * bound).float().sum()
+                total_sum += p.data.numel()
+                p.data.clamp_(-group["zeta"] * bound, group["zeta"] * bound)
+        return (clipped_sum / total_sum).item()
