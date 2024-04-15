@@ -19,84 +19,85 @@ task = LabelPermutedEMNIST()
 total_steps = 1000000
 n_seeds = 20
 
-# 'logs/exp2/label_permuted_emnist/sgd/fcn_leakyrelu/lr_0.01',
+
+# 'logs/exp2/label_permuted_emnist/sgd/fcn_relu/lr_0.01',
 sgd_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.01],
-               network=[FCNLeakyReLU()],
+               network=[FCNReLU()],
                n_samples=[total_steps],
     )
 
-# 'logs/exp2/label_permuted_emnist/adam/fcn_leakyrelu/lr_0.0001',
+# 'logs/exp2/label_permuted_emnist/adam/fcn_relu/lr_0.0001', 
 adam_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.0001],
-               network=[FCNLeakyReLU()],
+               network=[FCNReLU()],
                n_samples=[total_steps],
     )
 
-# 'logs/exp2/label_permuted_emnist/l2_init_sgd/fcn_leakyrelu/lr_0.01_weight_decay_0.001',
+# 'logs/exp2/label_permuted_emnist/l2_init_sgd/fcn_relu/lr_0.01_weight_decay_0.001', 
 l2_init_sgd_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.01],
                weight_decay=[0.001],
-               network=[FCNLeakyReLU()],
+               network=[FCNReLU()],
                n_samples=[total_steps],
     )
 
-# 'logs/exp2/label_permuted_emnist/l2_init_adam/fcn_leakyrelu/lr_0.001_weight_decay_0.01',
+# 'logs/exp2/label_permuted_emnist/l2_init_adam/fcn_relu/lr_0.001_weight_decay_0.01', 
 l2_init_adam_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.001],
                weight_decay=[0.01],
-               network=[FCNLeakyReLU()],
+               network=[FCNReLU()],
                n_samples=[total_steps],
     )
 
-# 'logs/exp2/label_permuted_emnist/madam/fcn_leakyrelu/lr_0.01_p_scale_5.0',
+# 'logs/exp2/label_permuted_emnist/madam/fcn_relu/lr_0.01_p_scale_5.0', 
 madam_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.01],
                p_scale=[5.0],
-               network=[FCNLeakyReLU()],
+               network=[FCNReLU()],
                n_samples=[total_steps],
     )
 
-# 'logs/exp2/label_permuted_emnist/shrink_and_perturb_sgd/fcn_leakyrelu/lr_0.01_sigma_0.01_weight_decay_0.001',
+# 'logs/exp2/label_permuted_emnist/shrink_and_perturb_sgd/fcn_relu/lr_0.01_sigma_0.01_weight_decay_0.001', 
 shrink_and_perturb_sgd_grid = GridSearch(
                 seed=[i for i in range(0, n_seeds)],
                 lr=[0.01],
                 sigma=[0.01],
                 weight_decay=[0.001],
-                network=[FCNLeakyReLU()],
+                network=[FCNReLU()],
                 n_samples=[total_steps],
      )
 
-# 'logs/exp2/label_permuted_emnist/shrink_and_perturb_adam/fcn_leakyrelu/lr_0.001_sigma_0.001_weight_decay_0.01',
+# 'logs/exp2/label_permuted_emnist/shrink_and_perturb_adam/fcn_relu/lr_0.001_sigma_0.01_weight_decay_0.01', 
 shrink_and_perturb_adam_grid = GridSearch(
                 seed=[i for i in range(0, n_seeds)],
                 lr=[0.001],
-                sigma=[0.001],
+                sigma=[0.01],
                 weight_decay=[0.01],
-                network=[FCNLeakyReLU()],
+                network=[FCNReLU()],
                 n_samples=[total_steps],
      )
 
-# 'logs/exp2/label_permuted_emnist/weight_clipping_sgd/fcn_leakyrelu/lr_0.01_zeta_2.0',
+# 'logs/exp2/label_permuted_emnist/weight_clipping_sgd/fcn_relu/lr_0.01_zeta_2.0', 
 weight_clipping_sgd_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.01],
                zeta=[2.0],
-               network=[FCNLeakyReLU()],
+               network=[FCNReLU()],
                n_samples=[total_steps],
     )
 
-# 'logs/exp2/label_permuted_emnist/weight_clipping_adam/fcn_leakyrelu/lr_0.0001_zeta_3.0'
+# 'logs/exp2/label_permuted_emnist/weight_clipping_adam/fcn_relu/lr_0.0001_zeta_4.0'
 weight_clipping_adam_grid = GridSearch(
                seed=[i for i in range(0, n_seeds)],
                lr=[0.0001],
-               zeta=[3.0],
-               network=[FCNLeakyReLU()],
+               zeta=[4.0],
+               network=[FCNReLU()],
                n_samples=[total_steps],
     )
 
