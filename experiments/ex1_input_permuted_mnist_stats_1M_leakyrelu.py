@@ -10,12 +10,12 @@ from core.network.fcn_relu import FCNReLUWithHooks as FCNReLU
 from core.network.fcn_tanh import FCNTanhWithHooks as FCNTanh
 from core.network.fcn_leakyrelu import FCNLeakyReLUWithHooks as FCNLeakyReLU
 from core.runner import Runner
-from core.task.input_permuted_mnist import InputPermutedMNIST
+from core.task.input_permuted_mnist import InputPermutedMNIST50K, InputPermutedMNIST5K
 from core.run.sl_stats import RunStats
 from core.utils import create_script_generator, create_script_runner, tasks
 
 exp_name = "exp1_stats_1M"
-task = InputPermutedMNIST()
+task = InputPermutedMNIST5K()
 total_steps = 1000000
 n_seeds = 20
 
