@@ -18,8 +18,8 @@ class InitBounds:
             raise ValueError("Unsupported tensor dimension: {}".format(p.dim()))
 
 class WeightClippingSGD(torch.optim.Optimizer):
-    def __init__(self, params, zeta=1.0, optimizer=torch.optim.SGD, clip_last_layer=True, **kwargs):
-        defaults = dict(zeta=zeta, clip_last_layer=clip_last_layer)
+    def __init__(self, params, kappa=1.0, optimizer=torch.optim.SGD, clip_last_layer=True, **kwargs):
+        defaults = dict(kappa=kappa, clip_last_layer=clip_last_layer)
         super(WeightClippingSGD, self).__init__(params, defaults)
         self.optimizer = optimizer(self.param_groups, **kwargs)
         self.param_groups = self.optimizer.param_groups
@@ -35,7 +35,7 @@ class WeightClippingSGD(torch.optim.Optimizer):
         for group in self.param_groups:
             for i, p in enumerate(group["params"]):
                 bound = self.init_bounds.get(p)
-                p.data.clamp_(-group["zeta"] * bound, group["zeta"] * bound)
+                p.data.clamp_(-group["kappa"] * bound, group["kappa"] * bound)
 ```
 
 ## Reproducing results:
