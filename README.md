@@ -55,6 +55,5 @@ pip install .
 Distributed under the [MIT License](https://opensource.org/licenses/MIT). See `LICENSE` for more information.
 
 ## How to cite
-```
-Elsayed, M., Lan, Q., Lyle, C., Mahmood, A. R. (2024). Weight clipping for deep continual and reinforcement learning. In the First Reinforcement Learning Conference
-```
+
+Elsayed, M., Lan, Q., Lyle, C., Mahmood, A. R. (2024). Weight clipping for deep continual and reinforcement learning. <em>In the First Reinforcement Learning Conference</em>
