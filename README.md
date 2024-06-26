@@ -18,8 +18,8 @@ class InitBounds:
             raise ValueError("Unsupported tensor dimension: {}".format(p.dim()))
 
 class WeightClippingSGD(torch.optim.Optimizer):
-    def __init__(self, params, kappa=1.0, optimizer=torch.optim.SGD, clip_last_layer=True, **kwargs):
-        defaults = dict(kappa=kappa, clip_last_layer=clip_last_layer)
+    def __init__(self, params, kappa=1.0, optimizer=torch.optim.SGD, **kwargs):
+        defaults = dict(kappa=kappa)
         super(WeightClippingSGD, self).__init__(params, defaults)
         self.optimizer = optimizer(self.param_groups, **kwargs)
         self.param_groups = self.optimizer.param_groups
