@@ -54,6 +54,19 @@ pip install .
 ## License
 Distributed under the [MIT License](https://opensource.org/licenses/MIT). See `LICENSE` for more information.
 
+
+
 ## How to cite
 
+#### Bibtex:
+```bibtex
+@inproceedings{elsayed2024weightclipping,
+  title={Weight clipping for deep continual and reinforcement learning},
+  author={Elsayed, Mohamed and Lan, Qingfeng and Lyle, Clare and Mahmood, A Rupam},
+  booktitle={Reinforcement Learning Conference},
+  year={2024}
+}
+```
+
+#### APA:
 Elsayed, M., Lan, Q., Lyle, C., Mahmood, A. R. (2024). Weight clipping for deep continual and reinforcement learning. <em>In the First Reinforcement Learning Conference</em>
