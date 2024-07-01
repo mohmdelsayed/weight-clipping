@@ -3,6 +3,8 @@
 The official repo for reproducing the experiments and weight clipping implementation. You can find the paper from [this link](). Here we give a minimal implementation for weight clipping with SGD (change `torch.optim.SGD` to torch.optim.Adam` if you want to use Adam).
 
 ```python
+import torch, math
+
 class InitBounds:
     def __init__(self):
         self.previous_weight = None
@@ -33,7 +35,7 @@ class WeightClippingSGD(torch.optim.Optimizer):
         self.weight_clipping()
     def weight_clipping(self):
         for group in self.param_groups:
-            for i, p in enumerate(group["params"]):
+            for p in group["params"]:
                 bound = self.init_bounds.get(p)
                 p.data.clamp_(-group["kappa"] * bound, group["kappa"] * bound)
 ```
