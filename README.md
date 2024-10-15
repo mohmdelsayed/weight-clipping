@@ -62,13 +62,12 @@ Distributed under the [MIT License](https://opensource.org/licenses/MIT). See `L
 
 #### Bibtex:
 ```bibtex
-@inproceedings{elsayed2024weightclipping,
-  title={Weight clipping for deep continual and reinforcement learning},
-  author={Elsayed, Mohamed and Lan, Qingfeng and Lyle, Clare and Mahmood, A Rupam},
-  booktitle={Reinforcement Learning Conference},
-  year={2024}
+@article{elsayed2024weight,
+    title={Weight Clipping for Deep Continual and Reinforcement Learning},
+    author={Elsayed, Mohamed and Lan, Qingfeng and Lyle, Clare and Mahmood, A. Rupam},
+    journal={Reinforcement Learning Journal},
+    volume={5},
+    pages={2198--2217},
+    year={2024}
 }
 ```
-
-#### APA:
-Elsayed, M., Lan, Q., Lyle, C., Mahmood, A. R. (2024). Weight clipping for deep continual and reinforcement learning. <em>In the First Reinforcement Learning Conference</em>
