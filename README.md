@@ -1,6 +1,6 @@
 # Weight-Clipping
 
-The official repo for reproducing the experiments and weight clipping implementation. You can find the paper from [this link](). Here we give a minimal implementation for weight clipping with SGD (change `torch.optim.SGD` to torch.optim.Adam` if you want to use Adam).
+The official repo for reproducing the experiments and weight clipping implementation. You can find the paper from [this link](https://arxiv.org/abs/2407.01704). Here we give a minimal implementation for weight clipping with SGD (change `torch.optim.SGD` to torch.optim.Adam` if you want to use Adam).
 
 ```python
 import torch, math
